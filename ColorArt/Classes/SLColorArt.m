@@ -22,6 +22,9 @@
 #define kAnalyzedSecondaryColor @"kAnalyzedSecondaryColor"
 #define kAnalyzedDetailColor @"kAnalyzedDetailColor"
 
+@interface UIColor (Copying)
+- (id)copyWithZone:(NSZone *)zone;
+@end
 
 
 @interface UIColor (DarkAddition)
@@ -385,7 +388,16 @@ typedef struct RGBAPixel
 }
 
 @end
+@implementation UIColor (Copying)
 
+- (id)copyWithZone:(NSZone *)zone{
+    CGColorRef cgcopy = CGColorCreateCopy([self CGColor]);
+    UIColor *copy = [[[self class] allocWithZone:zone] initWithCGColor:cgcopy];
+    CGColorRelease(cgcopy);
+    return copy;
+}
+
+@end
 @implementation UIColor (DarkAddition)
 
 - (BOOL)pc_isDarkColor
