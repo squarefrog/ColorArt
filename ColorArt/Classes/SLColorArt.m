@@ -22,10 +22,6 @@
 #define kAnalyzedSecondaryColor @"kAnalyzedSecondaryColor"
 #define kAnalyzedDetailColor @"kAnalyzedDetailColor"
 
-@interface UIColor (Copying)
-- (id)copyWithZone:(NSZone *)zone;
-@end
-
 
 @interface UIColor (DarkAddition)
 
@@ -265,14 +261,14 @@ typedef struct RGBAPixel
         for(NSUInteger g = 0; g < pixelRange; g++) {
             for(NSUInteger r = 0; r < pixelRange; r++) {
                 NSUInteger count = rawImageColors[r][g][b];
-                if(count > self.randomColorThreshold) {
+                if(count > _randomColorThreshold) {
                     UIColor* color = [UIColor colorWithRed:r / (CGFloat)pixelRange green:g / (CGFloat)pixelRange blue:b / (CGFloat)pixelRange alpha:1];
                     PCCountedColor* countedColor = [[PCCountedColor alloc] initWithColor:color count:count];
                     [imageColors addObject:countedColor];
                 }
                 
                 count = rawEdgeColors[r][g][b];
-                if(count > self.randomColorThreshold) {
+                if(count > _randomColorThreshold) {
                     UIColor* color = [UIColor colorWithRed:r / (CGFloat)pixelRange green:g / (CGFloat)pixelRange blue:b / (CGFloat)pixelRange alpha:1];
                     PCCountedColor* countedColor = [[PCCountedColor alloc] initWithColor:color count:count];
                     [edgeColors addObject:countedColor];
